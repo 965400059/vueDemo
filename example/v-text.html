@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        .active {
-            color: red;
-        }
-    </style>
+    <script src="../assets/js/vue.js"></script>
 </head>
-
 <body>
+    <h1>v-text & v-html</h1>
+    <hr>
     <div id="app">
-        <div v-bind:class="{active : isActive}">11</div>
+        <div v-text="message"></div>
+        <div v-html="msgHtml"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="http://code.jquery.com/jquery-2.2.4.js"></script>
     <script>
         var app = new Vue({
-            el: '#app',
-            data: {
-                isActive: true
+            el:'#app',
+            data:{
+                message:"hello world!",
+                msgHtml:'<b>你好</b>'
             }
         })
     </script>
 </body>
-
 </html>
