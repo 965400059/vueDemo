@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.component 组件</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Vue.component 组件</h1>
+    <h3>1，全局组件</h3>
+    <div id="app1">
+        <weiwei></weiwei>
+    </div>
+    <hr>
+    <h3>2,局部组件</h3>
+    <div id="app2">
+        <weiwei></weiwei>
+    </div>
+    <hr>
+    <h1>component 组件props 属性</h1>
+    <h3>1,定义属性获取值</h3>
+    <div id="app3">
+        <penda here="china"></penda>
+    </div>
+    <hr>
+    <h3>2,属性中带 - 的处理方式</h3>
+    <div id="app4">
+        <penda from-here="china"></penda>
+    </div>
+    <hr>
+    <h3>3,在构造器里向组件中传值</h3>
+    <div id="app5">
+        <penda v-bind:here="message"></penda>
+    </div>
+    <hr>
+    <h1>component 父子组件的关系</h1>
+    <h3>1,构造器外部写局部注册组件</h3>
+    <div id="app6">
+        <penda></penda>
+    </div>
+    <hr>
+    <h3>2,父子组件的嵌套</h3>
+    <div id="app7">
+        <penda></penda>
+    </div>
+    <hr>
+    <h1>component 标签</h1>
+    <div id="app8">
+        <component v-bind:is="who"></component>
+            <button @click="updateComponent">updateComponent</button>
+    </div>
+    <script>
+        Vue.component('weiwei',{
+            template:`<div>全局注册组件weiwei标签</div>`
+        })
+
+        var app1 = new Vue({
+            el:'#app1',
+            data:{
+            }
+        })
+
+        var app2 = new Vue({
+            el:'#app2',
+            components:{
+                weiwei:{
+                    template:`<div>局部注册组件weiwei标签</div>`
+                }
+            }
+        })
+
+        var app3 = new Vue({
+            el:'#app3',
+            components:{
+                penda:{
+                    props:['here'],
+                    template:`<div style="color:red">penda from {{here}}</div>`
+                }
+            }   
+        })
+
+        var app4 = new Vue({
+            el:'#app4',
+            components:{
+                penda:{
+                    props:['fromHere'],
+                    template:`<div style="color:red">penda from {{fromHere}}</div>`
+                }
+            }   
+        })
+
+        var app5 = new Vue({
+            el:'#app5',
+            data:{
+                message:'SiChuan'
+            },
+            components:{
+                penda:{
+                    props:['here'],
+                    template:`<div style="color:red">penda from {{here}}</div>`
+                }
+            }   
+        })
+
+        var penda = {
+            template:`<div style="color:red">penda from China</div>`
+        }
+
+        var app6 = new Vue({
+            el:'#app6',
+            components:{
+                penda:penda
+            }   
+        })
+
+        var app7 = new Vue({
+            el:'#app7',
+            components:{
+                penda:{
+                    template:`
+                        <div>
+                            <p>penda from China</p>
+                            <city></city>
+                        </div>
+                    `,
+                    components:{
+                        city:{
+                            template:`<div>SiChuan of China</div>`
+                        }
+                    }
+                }
+                
+            }   
+        })
+
+        var componentA = {
+            template:`<div style="color:red;">I'm componentA</div>`
+        }, componentB = {
+            template:`<div style="color:green;">I'm componentB</div>`
+        }, componentC = {
+            template:`<div style="color:pink;">I'm componentC</div>`
+        };
+        
+        var app8 = new Vue({
+            el:'#app8',
+            data:{
+                who:'componentA'
+            },
+            components:{
+                componentA:componentA,
+                componentB:componentB,
+                componentC:componentC
+            },
+            methods:{
+                updateComponent:function(){
+                    if(this.who=='componentA'){
+                        this.who='componentB';
+                    }else if(this.who=='componentB'){
+                        this.who='componentC';
+                    }else{
+                        this.who='componentA';
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
