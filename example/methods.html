@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Methods Option 方法选项</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Methods Option 方法选项</h1>
+    <hr>
+    <div id="app">
+        {{a}}
+        <p><button @click="add">添加</button></p>
+    </div>
+    <hr>
+    <h3>1,methods 中传递参数</h3>
+    <div id="app1">
+        {{a}}
+        <p><button @click="add(2)">添加</button></p>
+    </div>
+    <hr>
+    <h3>2,methods 中的$event参数</h3>
+    <div id="app2">
+        {{a}}
+        <p><button @click="add(2,$event)">添加</button></p>
+    </div>
+    <hr>
+    <h3>3,native 给组件绑定构造器里面的原生事件</h3>
+    <div id="app3">
+        {{a}}
+        <p><btn @click.native="add(3)"></btn></p>
+    </div>
+    <hr>
+    <h3>4,methods 作用域外部调用构造器里的方法</h3>
+    <div id="app4">
+        {{a}}
+    </div>
+    <p><button onclick="app4.add(2)">添加</button></p>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                a:1
+            },
+            methods:{
+                add:function(){
+                    this.a++
+                }
+            }
+        })
+
+        var app1 = new Vue({
+            el:'#app1',
+            data:{
+                a:1
+            },
+            methods:{
+                add:function(num){
+                    if(num!=''){this.a+=num}
+                    else{this.a++}
+                }
+            }
+        })
+
+        var app2 = new Vue({
+            el:'#app2',
+            data:{
+                a:1
+            },
+            methods:{
+                add:function(num,$event){
+                    console.log($event);
+                    if(num!=''){this.a+=num}
+                    else{this.a++}
+                }
+            }
+        })
+
+        var btn = {
+            template:`<button>组件add</button>`
+        }
+
+        var app3 = new Vue({
+            el:'#app3',
+            data:{
+                a:1
+            },
+            methods:{
+                add:function(num){
+                    if(num!=''){this.a+=num}
+                    else{this.a++}
+                }
+            },
+            components:{
+                btn:btn
+            }
+        })
+
+        var app4 = new Vue({
+            el:'#app4',
+            data:{
+                a:1
+            },
+            methods:{
+                add:function(num){
+                    if(num!=''){this.a+=num}
+                    else{this.a++}
+                }
+            }
+        })
+    </script>
+</body>
+</html>

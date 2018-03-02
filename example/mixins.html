@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mixins 混入选项操作</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Mixins 混入选项操作</h1>
+    <hr>
+    <h3>1,Mixins 基础用法</h3>
+    <div id="app">
+        <p>num:{{num}}</p>
+        <p><button @click="add">增加数量</button></p>
+    </div>
+    <hr>
+    <h3>2,Mixins 调用顺序</h3>
+    <div id="app1">
+        <p>num:{{num}}</p>
+        <p><button @click="add">增加数量</button></p>
+    </div>
+    <hr>
+    <h3>3,Mixins 全局api混入</h3>
+    <div id="app2">
+        <p>num:{{num}}</p>
+        <p><button @click="add">增加数量</button></p>
+    </div>
+    <script>
+
+        var addLog = {
+            updated:function(){
+                console.log("数据发生了变化，变化成"+this.num+".");
+            }
+        }
+
+        var app = new Vue({
+            el:'#app',
+            data:{
+                num:1
+            },
+            methods:{
+                add:function(){
+                    this.num++
+                }
+            },
+            mixins:[addLog]
+        })
+
+        var app1 = new Vue({
+            el:'#app1',
+            data:{
+                num:1
+            },
+            methods:{
+                add:function(){
+                    this.num++
+                }
+            },
+            updated:function(){
+                console.log("构造器里的updated方法。")
+            },
+            mixins:[addLog]
+        })
+
+        
+        Vue.mixin({
+            updated:function(){
+                console.log('我是全局被混入的');
+            }
+        })
+
+        var app2 = new Vue({
+            el:'#app2',
+            data:{
+                num:1
+            },
+            methods:{
+                add:function(){
+                    this.num++
+                }
+            },
+            mixins:[addLog]
+        })
+
+
+
+        
+    </script>
+</body>
+</html>
