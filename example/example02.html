@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实例方法</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>实例方法</h1>
+    <hr>
+    <h3>1,$mount方法</h3>
+    <div id="app">
+        {{message}}
+    </div>
+    <hr>
+    <h3>2,$destroy方法</h3>
+    <p><button onclick="destroy()">卸载</button></p>
+    <hr>
+    <h3>3,$forceUpdate方法</h3>
+    <p><button onclick="forceUpdate()">更新</button></p>
+    <hr>
+    <h3>4,$nextTick方法</h3>
+    <p><button onclick="nextTick()">数据修改</button></p>
+    <script>
+        var weiwei = Vue.extend({
+            template:`<p>{{message}}</p>`,
+            data:function(){
+                return {
+                    message:'hello , I am weiwei'
+                }
+            },
+            mounted:function(){
+                console.log('mounted 创建完成！')
+            },
+            destroyed:function(){
+                console.log('destroy 销毁之后！')
+            },
+            updated:function(){
+                console.log('updated 更新之后！')
+            }
+        })
+
+        var vm = new weiwei().$mount('#app');
+        
+        function destroy(){
+            vm.$destroy();
+        }
+
+        function forceUpdate(){
+            vm.$forceUpdate();
+        }
+
+        function nextTick(){
+            vm.message="update message info ";
+            vm.$nextTick(function(){
+                console.log('message更新完后我被调用了');
+            })
+        }
+
+    </script>
+</body>
+</html>

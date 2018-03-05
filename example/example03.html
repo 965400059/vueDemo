@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实例事件</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>实例事件</h1>
+    <hr>
+    <h3>1,$on在构造器外部添加事件</h3>
+    <div id="app">
+        {{num}}
+        <p><button @click="add">add</button></p>
+    </div>
+    <button onclick="reduce()">reduce</button>
+    <hr>
+    <h3>2,$once执行一次的事件</h3>
+    <button onclick="onceReduce()">onceReduce</button>
+    <hr>
+    <h3>3,$off关闭事件</h3>
+    <button onclick="offReduce()">offReduce</button>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                num:1
+            },
+            methods:{
+                add:function(){
+                    this.num++
+                }
+            }
+        })
+
+        app.$on('reduce',function(){
+            console.log('执行了reduce');
+            this.num--
+        })
+
+        function reduce(){
+            app.$emit('reduce');
+        }
+
+        app.$once('onceReduce',function(){
+            console.log('执行了onceReduce');
+            this.num--
+        })
+
+        function onceReduce(){
+            app.$emit('onceReduce');
+        }
+
+        function offReduce(){
+            console.log('offReduce,给app解绑reduce事件');
+            app.$off('reduce');
+        }
+    </script>
+</body>
+</html>
